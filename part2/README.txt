@@ -2,8 +2,8 @@ Project1 Part2
 ---------------
 
 Name: Zeyi Pan
-Student ID: 31633987
-Email: zpan12@ur.rochester.edu
+Student ID: 
+Email: 
 
 (1) Execute
 Windows Terminal Commend: python test2.py
