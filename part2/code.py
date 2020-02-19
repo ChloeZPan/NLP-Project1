@@ -30,29 +30,52 @@ def similarity_wu_palmer(type1, type2):
     """2aii) Take two types in the TRIPS ontology as inputs, and return the similarity between them (a number).
             Implement the wu palmer algorithm in this function."""
     # IMPLEMENT FUNCTION HERE
-    p_1 = [type1]
-    depth1 = 1
-    current1 = type1
-    while 'parent' in jsontrips.ontology()[current1].keys() and jsontrips.ontology()[current1]['parent'] != "":
-        p_1.append(jsontrips.ontology()[current1]['parent'])
-        current1 = jsontrips.ontology()[current1]['parent']
-        depth1 += 1
 
-    depth2 = 1
-    current2 = type2
-    while 'parent' in jsontrips.ontology()[current2].keys() and jsontrips.ontology()[current2]['parent'] != "":
-        depth2 += 1
-        current2 = jsontrips.ontology()[current2]['parent']
+    l1 = []
+    l2 = []
+    cur1 = type1
+    cur2 = type2
+    while 'parent' in jsontrips.ontology()[cur1].keys() and jsontrips.ontology()[cur1]['parent'] != "":
+        l1.append(cur1)
+        cur1 = jsontrips.ontology()[cur1]['parent']
 
-    edge = 0
-    current3 = type2
-    while 'parent' in jsontrips.ontology()[current3].keys() and jsontrips.ontology()[current3]['parent'] not in p_1:
-        current3 = jsontrips.ontology()[current3]['parent']
-        edge += 1
+    while 'parent' in jsontrips.ontology()[cur2].keys() and jsontrips.ontology()[cur2]['parent'] != "":
+        l2.append(cur2)
+        cur2 = jsontrips.ontology()[cur2]['parent']
 
-    depth3 = depth2 - edge - 1
+    l1.reverse()
+    l2.reverse()
+    index = 0
+    # print (l1)
+    # print (l2)
+    while index < len(l1) and index < len(l2) and l1[index] == l2[index]:
+        index = index + 1
+    # print (index)
 
-    return 2*depth3/(depth1 + depth2)
+    return 2 * (index) / (len(l1) + len(l2))
+    # p_1 = [type1]
+    # depth1 = 1
+    # current1 = type1
+    # while 'parent' in jsontrips.ontology()[current1].keys() and jsontrips.ontology()[current1]['parent'] != "":
+    #     p_1.append(jsontrips.ontology()[current1]['parent'])
+    #     current1 = jsontrips.ontology()[current1]['parent']
+    #     depth1 += 1
+    #
+    # depth2 = 1
+    # current2 = type2
+    # while 'parent' in jsontrips.ontology()[current2].keys() and jsontrips.ontology()[current2]['parent'] != "":
+    #     depth2 += 1
+    #     current2 = jsontrips.ontology()[current2]['parent']
+    #
+    # edge = 0
+    # current3 = type2
+    # while 'parent' in jsontrips.ontology()[current3].keys() and jsontrips.ontology()[current3]['parent'] not in p_1:
+    #     current3 = jsontrips.ontology()[current3]['parent']
+    #     edge += 1
+    #
+    # depth3 = depth2 - edge - 1
+    #
+    # return 2*depth3/(depth1 + depth2)
 
 
 def most_similar_type(type1, type2, type_ref):
